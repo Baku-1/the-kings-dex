@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The King's Dex - User-Friendly DeFi on Ronin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-bg-deep-space text-text-primary pb-16">
+
+    <header class="p-4 flex justify-between items-center sticky top-0 z-50 header-cyber">
+        <a href="index.html" class="text-3xl app-title text-cyan-300 cursor-pointer">The King's Dex</a>
+        <div id="wallet-section">
+            <button id="connectWalletBtn" class="btn btn-connect-wallet text-sm">
+                <i class="fas fa-wallet mr-2"></i>Connect Wallet
+            </button>
+            <div id="walletInfo" class="hidden wallet-address-display text-sm">
+                <span id="walletAddress"></span>
+            </div>
+        </div>
+    </header>
+
+    <nav id="dexNav" class="bg-bg-element-dark shadow-md flex justify-center items-center space-x-2 md:space-x-4 border-b border-border-cyber">
+        <a href="index.html" class="dex-nav-item active" id="nav-landingPage">Home</a>
+        <a href="swap.html" class="dex-nav-item" id="nav-swapPage">Swap</a>
+        <a href="pools.html" class="dex-nav-item" id="nav-poolsPage">Pools</a>
+        <a href="farm.html" class="dex-nav-item" id="nav-farmPage">Farm</a>
+        <a href="learn.html" class="dex-nav-item" id="nav-learnPage">Learn</a>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 space-y-12">
+        <div class="text-center py-12 bg-bg-element-medium p-8 rounded-lg border border-border-cyber-glow shadow-2xl" style="box-shadow: 0 0 30px rgba(var(--accent-magenta-rgb), 0.3), 0 0 50px rgba(var(--accent-blue-rgb), 0.2) inset;">
+            <h2 class="text-4xl md:text-5xl font-orbitron font-bold mb-4">Welcome to The King's Dex</h2>
+            <p class="text-lg md:text-xl text-text-secondary mb-8 max-w-2xl mx-auto">Your gateway to user-friendly Decentralized Finance on the Ronin Network. Swap, provide liquidity, and earn rewards with confidence.</p>
+            <div class="space-x-4">
+                <a href="swap.html" class="btn btn-cyber-primary px-6 py-3 text-md md:px-8 md:text-lg">
+                    <i class="fas fa-exchange-alt mr-2"></i>Start Swapping
+                </a>
+                <a href="pools.html" class="btn btn-cyber-secondary px-6 py-3 text-md md:px-8 md:text-lg">
+                    <i class="fas fa-water mr-2"></i>Explore Pools
+                </a>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="card-cyber p-6">
+                <h3 class="section-title text-accent-cyan text-xl md:text-2xl mb-3"><i class="fas fa-shield-alt mr-2"></i>Secure & Efficient</h3>
+                <p class="text-text-secondary">Built on the Ronin Network for fast, low-cost transactions. Your assets are secured by audited smart contracts (Katana Phase 1).</p>
+            </div>
+            <div class="card-cyber p-6">
+                <h3 class="section-title text-accent-magenta text-xl md:text-2xl mb-3"><i class="fas fa-check-circle mr-2"></i>Curated & Simple</h3>
+                <p class="text-text-secondary">We select quality tokens and simplify DeFi concepts, helping you make informed decisions in our Kingdom. <a href="learn.html" class="text-accent-magenta hover:underline">Learn more</a>.</p>
+            </div>
+            <div class="card-cyber p-6">
+                <h3 class="section-title text-accent-blue text-xl md:text-2xl mb-3"><i class="fas fa-coins mr-2"></i>Earn with $NXS</h3>
+                <p class="text-text-secondary">Our $Nexus (NXS) token powers the ecosystem. Provide liquidity and stake to earn rewards and grow with us. (Farming coming in Phase 2 with our contracts).</p>
+            </div>
+        </div>
+        
+        <div class="text-center py-10 card-cyber">
+            <h3 class="text-2xl md:text-3xl font-orbitron text-accent-green mb-4">New to DeFi? We're here to help!</h3>
+            <p class="text-text-secondary mb-6 max-w-xl mx-auto">Understand the basics of decentralized exchanges, liquidity pools, and earning strategies with our easy-to-follow guides.</p>
+            <a href="learn.html" class="btn btn-cyber-primary !bg-gradient-to-r !from-accent-green !to-accent-cyan px-8 py-3 text-lg">
+                <i class="fas fa-graduation-cap mr-2"></i>Visit Learning Hub
+            </a>
+        </div>
+
+        <div>
+            <h3 class="text-2xl section-title text-center my-8 !border-accent-cyan">Kingdom's Treasury Stats (Katana - Phase 1)</h3>
+            <div id="dexStatsContainer" class="grid md:grid-cols-3 gap-6 text-center">
+                <div class="bg-bg-element-dark p-6 rounded-lg border border-border-cyber hover:border-accent-cyan transition-all duration-300">
+                    <p class="text-3xl font-orbitron text-accent-cyan" id="totalValueLockedStat">Loading...</p>
+                    <p class="text-text-secondary mt-1">Total Value Locked (Katana)</p>
+                </div>
+                <div class="bg-bg-element-dark p-6 rounded-lg border border-border-cyber hover:border-accent-magenta transition-all duration-300">
+                    <p class="text-3xl font-orbitron text-accent-magenta" id="totalVolumeStat">Loading...</p>
+                    <p class="text-text-secondary mt-1">24h Volume (Katana)</p>
+                </div>
+                <div class="bg-bg-element-dark p-6 rounded-lg border border-border-cyber hover:border-accent-blue transition-all duration-300">
+                    <p class="text-3xl font-orbitron text-accent-blue" id="nxsPriceStat">Loading...</p>
+                    <p class="text-text-secondary mt-1">$NXS Price (via Katana)</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="messageModal" class="modal-backdrop">
+        <div class="modal-content">
+             <h3 id="modalTitle" class="section-title text-xl mb-4">Notification</h3>
+            <p id="modalMessageText" class="mb-4">Default message.</p>
+            <p class="text-xs text-text-secondary mt-2 hidden" id="modalGasFeeContainer"> Estimated Gas Fee: <span id="modalEstimatedGasFee" class="text-text-primary">-- RON</span>
+            </p>
+            <div id="modalActionSpinner" class="hidden my-3 animate-spin rounded-full h-8 w-8 border-b-2 border-accent-cyan mx-auto"></div>
+            <div id="modalTransactionLinkContainer" class="hidden my-3 text-sm">
+                <a href="#" id="modalTransactionLink" target="_blank" rel="noopener noreferrer" class="text-accent-blue hover:underline">View on Ronin Explorer</a>
+            </div>
+            <button id="closeModalBtn" class="btn btn-cyber-secondary px-6 py-2.5 text-sm mt-3">Close</button>
+        </div>
+    </div>
+    
+    <script type="module" src="main.js"></script>
+</body>
+</html>
