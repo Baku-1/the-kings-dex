@@ -1,0 +1,32 @@
+// firestore.rules
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Deny all reads and writes by default
+    // match /{document=**} {
+    //   allow read, write: if false;
+    // }
+
+    // kingsDexInfo: Publicly readable data for DEX stats, token lists, farm configs
+    match /kingsDexInfo/{docId} {
+      allow read: if true; // Anyone can read these general DEX info documents
+      allow write: if request.auth != null && request.auth.token.kingsDexAdmin == true; // Only admins can write
+      
+      // Subcollections under kingsDexInfo (like tokenLists or featuredFarms)
+      match /{subcollection}/{itemDocId} {
+        allow read: if true;
+        allow write: if request.auth != null && request.auth.token.kingsDexAdmin == true; // Only admins can write
+      }
+    }
+
+    // Example: User-specific data (if you add any, like preferences)
+    // match /users/{userId}/{document=**} {
+    //   allow read, write: if request.auth != null && request.auth.uid == userId;
+    // }
+
+    // Add more specific rules for other collections you might create.
+    // It's crucial to secure user data and administrative data properly.
+  }
+}
