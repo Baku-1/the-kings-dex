@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swap Tokens - The King's Dex</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-bg-deep-space text-text-primary pb-16">
+
+    <header class="p-4 flex justify-between items-center sticky top-0 z-50 header-cyber">
+        <a href="index.html" class="text-3xl app-title text-cyan-300 cursor-pointer">The King's Dex</a>
+        <div id="wallet-section">
+            <button id="connectWalletBtn" class="btn btn-connect-wallet text-sm">
+                <i class="fas fa-wallet mr-2"></i>Connect Wallet
+            </button>
+            <div id="walletInfo" class="hidden wallet-address-display text-sm">
+                <span id="walletAddress"></span>
+            </div>
+        </div>
+    </header>
+
+    <nav id="dexNav" class="bg-bg-element-dark shadow-md flex justify-center items-center space-x-2 md:space-x-4 border-b border-border-cyber">
+        <a href="index.html" class="dex-nav-item" id="nav-landingPage">Home</a>
+        <a href="swap.html" class="dex-nav-item active" id="nav-swapPage">Swap</a>
+        <a href="pools.html" class="dex-nav-item" id="nav-poolsPage">Pools</a>
+        <a href="farm.html" class="dex-nav-item" id="nav-farmPage">Farm</a>
+        <a href="learn.html" class="dex-nav-item" id="nav-learnPage">Learn</a>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto space-y-6">
+            <div class="card-cyber p-6 md:p-8 rounded-lg">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="section-title text-2xl !mb-0">Swap Tokens</h2>
+                    <button id="slippageSettingsBtnOpen" class="text-sm text-accent-cyan hover:text-white flex items-center" title="Transaction Settings">
+                        <i class="fas fa-cog mr-1"></i> Slippage: <span id="slippageDisplay">0.5%</span>
+                    </button>
+                </div>
+                <form id="swapForm" class="space-y-5">
+                    <div class="form-group bg-bg-element-dark p-4 rounded-md border border-border-cyber-medium">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="form-label !mb-0">You Pay</label>
+                            <div class="text-xs text-text-secondary">Balance: <span id="fromTokenBalance">0.00</span></div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="number" id="fromAmount" class="input-cyber flex-grow !py-3" placeholder="0.0" step="any">
+                            <button type="button" id="selectFromTokenBtn" class="btn btn-cyber-secondary !px-3 !py-3 whitespace-nowrap w-40 flex items-center justify-center">
+                                <img id="fromTokenIcon" src="https://placehold.co/24x24/181830/60EFFF?text=?" alt="Token" class="w-6 h-6 mr-2 rounded-full hidden">
+                                <span id="fromTokenSymbol">Select Token</span>
+                            </button>
+                        </div>
+                         <button type="button" id="maxFromAmountBtn" class="text-xs text-accent-blue hover:underline mt-1 float-right">Use MAX</button>
+                    </div>
+
+                    <div class="text-center my-0">
+                        <button type="button" id="swapDirectionBtn" class="p-2 rounded-full hover:bg-bg-element-medium text-accent-magenta hover:text-accent-cyan transition-transform duration-300 transform hover:rotate-180 focus:outline-none border border-border-cyber hover:border-accent-magenta" title="Swap to/from tokens">
+                            <i class="fas fa-exchange-alt text-xl"></i>
+                        </button>
+                    </div>
+
+                    <div class="form-group bg-bg-element-dark p-4 rounded-md border border-border-cyber-medium">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="form-label !mb-0">You Receive (Estimated)</label>
+                            <div class="text-xs text-text-secondary">Balance: <span id="toTokenBalance">0.00</span></div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="number" id="toAmount" class="input-cyber flex-grow !py-3" placeholder="0.0" readonly>
+                            <button type="button" id="selectToTokenBtn" class="btn btn-cyber-secondary !px-3 !py-3 whitespace-nowrap w-40 flex items-center justify-center">
+                                <img id="toTokenIcon" src="https://placehold.co/24x24/181830/60EFFF?text=?" alt="Token" class="w-6 h-6 mr-2 rounded-full hidden">
+                                <span id="toTokenSymbol">Select Token</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="nxsBurnWarningSwap" class="info-banner warning hidden">
+                        <i class="fas fa-fire"></i> A 7% burn applies to $NXS in this transaction. Net amount will be adjusted. <a href="learn.html#nxs-burn" class="font-bold hover:underline ml-1">Learn Why</a>
+                    </div>
+                    
+                    <div id="priceInfoContainer" class="text-sm text-text-secondary space-y-1.5 pt-3 border-t border-border-cyber-medium hidden">
+                        <div class="flex justify-between items-center">
+                            <span>Price:</span> 
+                            <span id="swapPriceInfo" class="text-right text-text-primary">--</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Minimum Received <i class="fas fa-info-circle text-xs text-text-secondary ml-1 cursor-pointer" title="The minimum amount you are guaranteed to receive if your transaction succeeds, accounting for slippage."></i>:</span>
+                            <span id="minReceivedInfo" class="text-text-primary">--</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Price Impact <i class="fas fa-info-circle text-xs text-text-secondary ml-1 cursor-pointer" title="The difference between the market price and the estimated price due to trade size. Larger trades may have higher impact."></i>:</span>
+                            <span id="priceImpactInfo" class="text-text-primary">--</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Liquidity Provider Fee <i class="fas fa-info-circle text-xs text-text-secondary ml-1 cursor-pointer" title="A 0.3% fee paid to liquidity providers on the Katana DEX for this trade."></i>:</span>
+                            <span id="lpFeeInfo" class="text-text-primary">--</span>
+                        </div>
+                         <div class="flex justify-between items-center">
+                            <span>Estimated Gas Fee <i class="fas fa-info-circle text-xs text-text-secondary ml-1 cursor-pointer" title="An estimate of the network fee in RON required to process this transaction."></i>:</span>
+                            <span id="swapEstimatedGasFee" class="text-text-primary">-- RON</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="confirmSwapBtnMain" class="btn btn-cyber-primary w-full !py-3.5 text-lg mt-4" disabled>Connect Wallet</button>
+                </form>
+            </div>
+            <div class="text-center text-xs text-text-secondary">
+                Swaps are routed through Katana DEX in Phase 1. <a href="learn.html#what-is-dex" class="text-accent-cyan hover:underline">Learn more about DEXs</a>.
+            </div>
+        </div>
+    </main>
+
+    <div id="messageModal" class="modal-backdrop">
+        <div class="modal-content">
+             <h3 id="modalTitle" class="section-title text-xl mb-4">Notification</h3>
+            <p id="modalMessageText" class="mb-4">Default message.</p>
+            <p class="text-xs text-text-secondary mt-2 hidden" id="modalGasFeeContainer">
+                Estimated Gas Fee: <span id="modalEstimatedGasFee" class="text-text-primary">-- RON</span>
+            </p>
+            <div id="modalActionSpinner" class="hidden my-3 animate-spin rounded-full h-8 w-8 border-b-2 border-accent-cyan mx-auto"></div>
+            <div id="modalTransactionLinkContainer" class="hidden my-3 text-sm">
+                <a href="#" id="modalTransactionLink" target="_blank" rel="noopener noreferrer" class="text-accent-blue hover:underline">View on Ronin Explorer</a>
+            </div>
+            <button id="closeModalBtn" class="btn btn-cyber-secondary px-6 py-2.5 text-sm mt-3">Close</button>
+        </div>
+    </div>
+    
+    <div id="tokenSelectModal" class="modal-backdrop">
+        <div class="modal-content max-w-sm w-full">
+            <h3 class="section-title text-xl mb-4 !border-accent-blue">Select a Token</h3>
+            <input type="text" id="tokenSearchInput" class="input-cyber mb-4" placeholder="Search name or paste address">
+            <div id="tokenListContainer" class="max-h-60 overflow-y-auto space-y-1 token-list-container">
+                <p class="text-text-secondary p-4 text-center">Loading tokens...</p>
+            </div>
+            <button id="closeTokenSelectModalBtn" class="btn btn-cyber-secondary px-6 py-2.5 text-sm mt-4">Close</button>
+        </div>
+    </div>
+
+    <div id="slippageModal" class="modal-backdrop">
+        <div class="modal-content max-w-xs w-full">
+            <h3 class="section-title text-xl mb-4 !border-accent-blue">Slippage Tolerance <i class="fas fa-info-circle text-xs text-text-secondary ml-1 cursor-pointer" title="Your transaction will revert if the price changes unfavorably by more than this percentage. Standard is 0.5%."></i></h3>
+            <div class="flex space-x-2 mb-3">
+                <button class="btn btn-cyber-secondary flex-1 slippage-option-btn" data-slippage="0.1">0.1%</button>
+                <button class="btn btn-cyber-secondary flex-1 slippage-option-btn active" data-slippage="0.5">0.5%</button>
+                <button class="btn btn-cyber-secondary flex-1 slippage-option-btn" data-slippage="1.0">1.0%</button>
+            </div>
+            <input type="number" step="0.1" min="0" max="10" id="customSlippageInput" class="input-cyber w-full mb-1" placeholder="Custom (%)">
+            <div id="slippageWarning" class="text-xs text-accent-yellow hidden p-1">High slippage can result in significant losses.</div>
+            <div class="flex space-x-2 mt-4">
+                <button id="saveSlippageBtn" class="btn btn-cyber-primary flex-1">Save</button>
+                <button id="closeSlippageModalBtn" class="btn btn-cyber-secondary flex-1">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
