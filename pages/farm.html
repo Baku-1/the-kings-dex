@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stake & Farm - The King's Dex</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-bg-deep-space text-text-primary pb-16">
+
+    <header class="p-4 flex justify-between items-center sticky top-0 z-50 header-cyber">
+        <a href="index.html" class="text-3xl app-title text-cyan-300 cursor-pointer">The King's Dex</a>
+        <div id="wallet-section">
+            <button id="connectWalletBtn" class="btn btn-connect-wallet text-sm">
+                <i class="fas fa-wallet mr-2"></i>Connect Wallet
+            </button>
+            <div id="walletInfo" class="hidden wallet-address-display text-sm">
+                <span id="walletAddress"></span>
+            </div>
+        </div>
+    </header>
+
+    <nav id="dexNav" class="bg-bg-element-dark shadow-md flex justify-center items-center space-x-2 md:space-x-4 border-b border-border-cyber">
+        <a href="index.html" class="dex-nav-item" id="nav-landingPage">Home</a>
+        <a href="swap.html" class="dex-nav-item" id="nav-swapPage">Swap</a>
+        <a href="pools.html" class="dex-nav-item" id="nav-poolsPage">Pools</a>
+        <a href="farm.html" class="dex-nav-item active" id="nav-farmPage">Farm</a>
+        <a href="learn.html" class="dex-nav-item" id="nav-learnPage">Learn</a>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 space-y-10">
+        <div class="text-center">
+            <h2 class="section-title text-3xl inline-block !border-accent-green">Stake & Farm Rewards</h2>
+            <p class="text-text-secondary mt-2 mb-4 max-w-xl mx-auto">
+                In Phase 1, this section may display relevant staking opportunities available on Katana DEX.
+                Native "The King's Dex" farms with $NXS rewards will launch in Phase 2 with our own smart contracts.
+                <a href="learn.html#what-is-staking" class="text-accent-cyan hover:underline">Learn more about staking.</a>
+            </p>
+        </div>
+
+        <div id="availableFarmsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="loadingFarmsMsg" class="card-cyber p-5 text-center text-text-secondary col-span-full">
+                <i class="fas fa-spinner fa-spin mr-2"></i> Loading available staking opportunities...
+            </div>
+            <div id="noFarmsFoundMsg" class="card-cyber p-5 text-center text-text-secondary col-span-full hidden">
+                No staking opportunities are currently featured. Check back for Phase 2 King's Dex native farms!
+            </div>
+            </div>
+    </main>
+
+    <div id="messageModal" class="modal-backdrop">
+        <div class="modal-content">
+             <h3 id="modalTitle" class="section-title text-xl mb-4">Notification</h3>
+            <p id="modalMessageText" class="mb-4">Default message.</p>
+            <p class="text-xs text-text-secondary mt-2 hidden" id="modalGasFeeContainer">
+                Estimated Gas Fee: <span id="modalEstimatedGasFee" class="text-text-primary">-- RON</span>
+            </p>
+            <div id="modalActionSpinner" class="hidden my-3 animate-spin rounded-full h-8 w-8 border-b-2 border-accent-cyan mx-auto"></div>
+            <div id="modalTransactionLinkContainer" class="hidden my-3 text-sm">
+                <a href="#" id="modalTransactionLink" target="_blank" rel="noopener noreferrer" class="text-accent-blue hover:underline">View on Ronin Explorer</a>
+            </div>
+            <button id="closeModalBtn" class="btn btn-cyber-secondary px-6 py-2.5 text-sm mt-3">Close</button>
+        </div>
+    </div>
+
+    <div id="stakeModal" class="modal-backdrop">
+        <div class="modal-content max-w-sm w-full">
+            <h3 class="section-title text-xl mb-4 !border-accent-green" id="stakeModalTitle">Stake Tokens</h3>
+            <p class="text-sm text-text-secondary mb-1">Farm: <span id="stakeModalFarmName" class="text-text-primary">--</span></p>
+            <div class="form-group bg-bg-element-dark p-3 rounded-md border border-border-cyber-medium">
+                <div class="flex justify-between items-center mb-1">
+                    <label class="form-label !text-xs !mb-0">Amount to <span id="stakeModalActionText">Stake</span></label>
+                    <div class="text-xs text-text-secondary">Available: <span id="stakeModalAvailableAmount">0.00</span> <span id="stakeModalTokenSymbol">--</span></div>
+                </div>
+                <input type="number" id="stakeAmountInput" class="input-cyber w-full !py-2.5" placeholder="0.0" step="any">
+                <button type="button" id="maxStakeAmountBtn" class="btn btn-cyber-secondary !text-xs !px-3 !py-1 mt-1 float-right">Use Max</button>
+            </div>
+            <div id="stakeModalEstGasFeeContainer" class="text-xs text-text-secondary mt-2 hidden">
+                Estimated Gas Fee: <span id="stakeModalEstGasFee" class="text-text-primary">-- RON</span>
+            </div>
+             <div id="nxsBurnWarningStakeModal" class="info-banner warning !text-xs !p-2 my-3 hidden">
+                 <i class="fas fa-fire"></i> Staking/unstaking $NXS itself involves a 7% burn. Claimed $NXS rewards will also be subject to burn upon transfer.
+            </div>
+            <div class="flex space-x-3 mt-6">
+                 <button id="confirmStakeActionBtn" class="btn btn-cyber-primary flex-1">Confirm <span id="confirmStakeActionText">Stake</span></button>
+                 <button id="cancelStakeBtn" class="btn btn-cyber-secondary flex-1">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
