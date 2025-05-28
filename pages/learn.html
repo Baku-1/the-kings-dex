@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn - The King's Dex</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-bg-deep-space text-text-primary pb-16">
+
+    <header class="p-4 flex justify-between items-center sticky top-0 z-50 header-cyber">
+        <a href="index.html" class="text-3xl app-title text-cyan-300 cursor-pointer">The King's Dex</a>
+        <div id="wallet-section">
+            <button id="connectWalletBtn" class="btn btn-connect-wallet text-sm">
+                <i class="fas fa-wallet mr-2"></i>Connect Wallet
+            </button>
+            <div id="walletInfo" class="hidden wallet-address-display text-sm">
+                <span id="walletAddress"></span>
+            </div>
+        </div>
+    </header>
+
+    <nav id="dexNav" class="bg-bg-element-dark shadow-md flex justify-center items-center space-x-2 md:space-x-4 border-b border-border-cyber">
+        <a href="index.html" class="dex-nav-item" id="nav-landingPage">Home</a>
+        <a href="swap.html" class="dex-nav-item" id="nav-swapPage">Swap</a>
+        <a href="pools.html" class="dex-nav-item" id="nav-poolsPage">Pools</a>
+        <a href="farm.html" class="dex-nav-item" id="nav-farmPage">Farm</a>
+        <a href="learn.html" class="dex-nav-item active" id="nav-learnPage">Learn</a>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="text-center mb-10">
+            <h2 class="section-title text-3xl md:text-4xl inline-block !border-accent-green">Kingdom Koders Learning Hub</h2>
+            <p class="text-text-secondary mt-2 max-w-xl mx-auto">Your resource for understanding Decentralized Finance and making the most of The King's Dex.</p>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-8">
+            <aside class="md:w-1/4 space-y-3 self-start sticky top-24"> {/* Sticky sidebar for larger screens */}
+                <h3 class="font-orbitron text-xl text-accent-cyan mb-3">Categories</h3>
+                <a href="#defi-basics" class="block p-3 rounded-md bg-bg-element-medium hover:bg-accent-cyan hover:text-bg-element-dark transition-colors duration-200 learn-category-link active">DeFi Basics</a>
+                <a href="#using-kings-dex" class="block p-3 rounded-md bg-bg-element-medium hover:bg-accent-cyan hover:text-bg-element-dark transition-colors duration-200 learn-category-link">Using The King's Dex</a>
+                <a href="#nxs-token-info" class="block p-3 rounded-md bg-bg-element-medium hover:bg-accent-cyan hover:text-bg-element-dark transition-colors duration-200 learn-category-link">$NXS Token</a>
+                <a href="#strategies-risks" class="block p-3 rounded-md bg-bg-element-medium hover:bg-accent-cyan hover:text-bg-element-dark transition-colors duration-200 learn-category-link">Strategies & Risks</a>
+                <a href="#security-tips" class="block p-3 rounded-md bg-bg-element-medium hover:bg-accent-cyan hover:text-bg-element-dark transition-colors duration-200 learn-category-link">Security Tips</a>
+                <a href="#tools-calculators" class="block p-3 rounded-md bg-bg-element-medium hover:bg-accent-cyan hover:text-bg-element-dark transition-colors duration-200 learn-category-link">Tools & Calculators</a>
+            </aside>
+
+            <section class="md:w-3/4 space-y-8">
+                <article id="defi-basics" class="card-cyber p-6 learn-article active">
+                    <h3 class="section-title text-2xl !border-accent-magenta">What is a DEX?</h3>
+                    <p class="text-text-secondary mb-3 leading-relaxed">A Decentralized Exchange (DEX) allows you to trade cryptocurrencies directly with other users (peer-to-peer) without needing a central company or intermediary to hold your funds. Trades are executed on the blockchain via smart contracts.</p>
+                    <h4 class="font-orbitron text-lg text-accent-blue mt-4 mb-2">Key Features:</h4>
+                    <ul class="list-disc list-inside text-text-secondary space-y-1 pl-4">
+                        <li><strong>Non-Custodial:</strong> You always control your private keys and your assets.</li>
+                        <li><strong>Permissionless:</strong> Generally, anyone can trade or provide liquidity if they meet the protocol's requirements.</li>
+                        <li><strong>Transparent:</strong> All transactions are recorded on the blockchain.</li>
+                    </ul>
+                </article>
+
+                <article id="what-are-lp" class="card-cyber p-6 learn-article">
+                     <h3 class="section-title text-2xl !border-accent-magenta">What are Liquidity Pools?</h3>
+                    <p class="text-text-secondary mb-3 leading-relaxed">Liquidity pools are collections of tokens locked in a smart contract by users called Liquidity Providers (LPs). These pools provide the liquidity (available tokens) needed for decentralized exchanges to facilitate trades. When you add tokens to a pool, you receive LP tokens representing your share. You earn a portion of the trading fees generated by that pool.</p>
+                </article>
+                
+                <article id="impermanent-loss" class="card-cyber p-6 learn-article">
+                     <h3 class="section-title text-2xl !border-accent-magenta">Understanding Impermanent Loss (IL)</h3>
+                    <p class="text-text-secondary mb-3 leading-relaxed">Impermanent Loss is a potential risk when providing liquidity to an Automated Market Maker (AMM) based DEX. It's the difference in value between holding your tokens in your wallet versus providing them as liquidity in a pool, if the price ratio of the two tokens changes significantly. Trading fees and farming rewards can help offset IL.</p>
+                    <button id="openILCalculatorBtn" class="btn btn-cyber-secondary btn-sm mt-3"><i class="fas fa-calculator mr-1"></i>Try Impermanent Loss Calculator</button>
+                </article>
+
+                <article id="using-kings-dex" class="card-cyber p-6 learn-article">
+                    <h3 class="section-title text-2xl !border-accent-magenta">How to Swap Tokens</h3>
+                    <p class="text-text-secondary mb-3 leading-relaxed">1. Connect your Ronin Wallet via the button in the header.<br>2. Navigate to the "Swap" page.<br>3. Select the token you want to pay with ("From") and the token you want to receive ("To").<br>4. Enter the amount you wish to swap.<br>5. Review the estimated output, price impact, slippage, and fees.<br>6. Click "Swap" and confirm the transaction in your wallet (this includes gas fees).</p>
+                    </article>
+                
+                <article id="nxs-token-info" class="card-cyber p-6 learn-article">
+                    <h3 class="section-title text-2xl !border-accent-magenta">$NXS Token & The 7% Burn</h3>
+                    <p class="text-text-secondary mb-3 leading-relaxed">The $Nexus (NXS) token is the utility token for The King's Dex and the wider Kingdom Koders ecosystem. A key feature of NXS is its 7% burn on most transfers. This means when you send NXS (e.g., in a swap, adding it to liquidity, or just transferring to another wallet), 7% of the amount is permanently removed from circulation (burned). The recipient receives 93% of the amount sent. This deflationary mechanism is designed to potentially increase token value over time. <strong class="text-text-primary">Be aware of this when transacting with NXS.</strong> The contract owner can pause/unpause this burn.</p>
+                </article>
+
+                <article id="tools-calculators" class="card-cyber p-6 learn-article">
+                    <h3 class="section-title text-2xl !border-accent-magenta">Helpful Tools</h3>
+                    <p class="text-text-secondary mb-3 leading-relaxed">We provide tools to help you make more informed decisions:</p>
+                    <ul class="list-disc list-inside text-text-secondary space-y-1 pl-4">
+                        <li><a href="#" id="openILCalculatorFromToolsBtn" class="text-accent-cyan hover:underline">Impermanent Loss Calculator:</a> Estimate potential IL before providing liquidity.</li>
+                        <li>More tools coming soon!</li>
+                    </ul>
+                </article>
+                 </section>
+        </div>
+    </main>
+
+    <div id="ilCalculatorModal" class="modal-backdrop">
+        <div class="modal-content max-w-lg">
+            <h3 class="section-title text-xl mb-4 !border-accent-blue">Impermanent Loss Calculator</h3>
+            <form id="ilCalcForm" class="space-y-4 text-left">
+                <p class="text-xs text-text-secondary mb-3">This tool estimates potential impermanent loss based on price changes. It does NOT account for trading fees earned or farming rewards, which can offset IL. For educational purposes only.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="ilTokenASymbol" class="form-label !text-sm">Token A Symbol</label>
+                        <input type="text" id="ilTokenASymbol" class="input-cyber !py-2" value="NXS">
+                    </div>
+                    <div>
+                        <label for="ilTokenBSymbol" class="form-label !text-sm">Token B Symbol</label>
+                        <input type="text" id="ilTokenBSymbol" class="input-cyber !py-2" value="RON">
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="ilTokenAAmount" class="form-label !text-sm">Initial Token A Amount (e.g., if providing liquidity)</label>
+                        <input type="number" id="ilTokenAAmount" class="input-cyber !py-2" placeholder="1000" step="any">
+                    </div>
+                    <div>
+                        <label for="ilTokenBAmount" class="form-label !text-sm">Initial Token B Amount (e.g., if providing liquidity)</label>
+                        <input type="number" id="ilTokenBAmount" class="input-cyber !py-2" placeholder="100" step="any">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="ilTokenAPriceChange" class="form-label !text-sm">Token A Future Price Change (%)</label>
+                        <input type="number" id="ilTokenAPriceChange" class="input-cyber !py-2" placeholder="e.g., 50 for +50%" step="any">
+                    </div>
+                    <div>
+                        <label for="ilTokenBPriceChange" class="form-label !text-sm">Token B Future Price Change (%)</label>
+                        <input type="number" id="ilTokenBPriceChange" class="input-cyber !py-2" placeholder="e.g., -20 for -20%" step="any">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-cyber-primary w-full mt-3">Calculate IL</button>
+            </form>
+            <div id="ilResult" class="mt-4 text-left hidden space-y-1">
+                <h4 class="font-orbitron text-md text-accent-green">Estimated Results:</h4>
+                <p class="text-sm">Value if you just HODL'd: <span id="ilValueHeld" class="text-text-primary font-semibold">--</span></p>
+                <p class="text-sm">Value of your assets in LP (after price change): <span id="ilValueInLP" class="text-text-primary font-semibold">--</span></p>
+                <p class="text-sm font-bold">Impermanent Loss: <span id="ilLossPercentage" class="text-accent-red">--%</span></p>
+                <p class="text-xs text-text-secondary">(This is the % difference compared to HODLing, due to price divergence in the pool)</p>
+            </div>
+            <button id="closeILCalculatorModalBtn" class="btn btn-cyber-secondary px-6 py-2.5 text-sm mt-4">Close</button>
+        </div>
+    </div>
+
+    <div id="messageModal" class="modal-backdrop">
+        <div class="modal-content">
+             <h3 id="modalTitle" class="section-title text-xl mb-4">Notification</h3>
+            <p id="modalMessageText" class="mb-4">Default message.</p>
+            <p class="text-xs text-text-secondary mt-2 hidden" id="modalGasFeeContainer">
+                Estimated Gas Fee: <span id="modalEstimatedGasFee" class="text-text-primary">-- RON</span>
+            </p>
+            <button id="closeModalBtn" class="btn btn-cyber-secondary px-6 py-2.5 text-sm mt-3">Close</button>
+        </div>
+    </div>
+    
+    <script type="module" src="main.js"></script>
+</body>
+</html>
