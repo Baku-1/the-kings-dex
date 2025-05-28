@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquidity Pools - The King's Dex</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-bg-deep-space text-text-primary pb-16">
+
+    <header class="p-4 flex justify-between items-center sticky top-0 z-50 header-cyber">
+        <a href="index.html" class="text-3xl app-title text-cyan-300 cursor-pointer">The King's Dex</a>
+        <div id="wallet-section">
+            <button id="connectWalletBtn" class="btn btn-connect-wallet text-sm">
+                <i class="fas fa-wallet mr-2"></i>Connect Wallet
+            </button>
+            <div id="walletInfo" class="hidden wallet-address-display text-sm">
+                <span id="walletAddress"></span>
+            </div>
+        </div>
+    </header>
+
+    <nav id="dexNav" class="bg-bg-element-dark shadow-md flex justify-center items-center space-x-2 md:space-x-4 border-b border-border-cyber">
+        <a href="index.html" class="dex-nav-item" id="nav-landingPage">Home</a>
+        <a href="swap.html" class="dex-nav-item" id="nav-swapPage">Swap</a>
+        <a href="pools.html" class="dex-nav-item active" id="nav-poolsPage">Pools</a>
+        <a href="farm.html" class="dex-nav-item" id="nav-farmPage">Farm</a>
+        <a href="learn.html" class="dex-nav-item" id="nav-learnPage">Learn</a>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 space-y-10">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <h2 class="section-title text-3xl !mb-0">
+                Liquidity Pools 
+                <i class="fas fa-info-circle text-lg text-text-secondary ml-1 cursor-pointer" title="Provide liquidity to earn trading fees from swaps on Katana DEX (Phase 1). Be aware of Impermanent Loss."></i>
+                <a href="learn.html#what-are-lp" class="text-sm text-accent-cyan hover:underline ml-2">(Learn More)</a>
+            </h2>
+            <a href="add-liquidity.html" id="goToAddLiquidityBtn" class="btn btn-cyber-primary whitespace-nowrap">
+                <i class="fas fa-plus-circle mr-2"></i>Add Liquidity
+            </a>
+        </div>
+
+        <div id="userLiquidityPositionsSection" class="space-y-4">
+            <h3 class="text-xl font-orbitron text-accent-magenta mb-3">Your Liquidity Positions (on Katana)</h3>
+            <div id="userPoolsContainer" class="space-y-4">
+                <div id="userPoolsLoadingMsg" class="card-cyber p-5 text-center text-text-secondary">
+                    <span id="userPoolsLoadingText"><i class="fas fa-spinner fa-spin mr-2"></i> Connect wallet to view your positions...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+                <h3 class="text-xl font-orbitron text-accent-cyan mb-0">Available Pools (on Katana DEX - Phase 1)</h3>
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="poolSearchInput" class="input-cyber !py-2 !px-3 text-sm" placeholder="Search pools (e.g., NXS/RON)">
+                </div>
+            </div>
+            <div id="availablePoolsContainer" class="grid md:grid-cols-2 gap-5">
+                <div id="availablePoolsLoadingMsg" class="card-cyber p-5 text-center text-text-secondary col-span-full">
+                    <i class="fas fa-spinner fa-spin mr-2"></i> Loading available Katana pools...
+                </div>
+                <div id="noPoolsFoundMsg" class="card-cyber p-5 text-center text-text-secondary col-span-full hidden">
+                    No pools match your search, or no pools are currently featured from Katana.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="messageModal" class="modal-backdrop">
+        <div class="modal-content">
+             <h3 id="modalTitle" class="section-title text-xl mb-4">Notification</h3>
+            <p id="modalMessageText" class="mb-4">Default message.</p>
+            <p class="text-xs text-text-secondary mt-2 hidden" id="modalGasFeeContainer">
+                Estimated Gas Fee: <span id="modalEstimatedGasFee" class="text-text-primary">-- RON</span>
+            </p>
+            <div id="modalActionSpinner" class="hidden my-3 animate-spin rounded-full h-8 w-8 border-b-2 border-accent-cyan mx-auto"></div>
+            <div id="modalTransactionLinkContainer" class="hidden my-3 text-sm">
+                <a href="#" id="modalTransactionLink" target="_blank" rel="noopener noreferrer" class="text-accent-blue hover:underline">View on Ronin Explorer</a>
+            </div>
+            <button id="closeModalBtn" class="btn btn-cyber-secondary px-6 py-2.5 text-sm mt-3">Close</button>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
