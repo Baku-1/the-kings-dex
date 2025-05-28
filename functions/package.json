@@ -1,0 +1,27 @@
+{
+  "name": "kings-dex-functions",
+  "description": "Cloud Functions for The King's Dex",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions,firestore",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18" 
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.11.1", 
+    "firebase-functions": "^4.9.0", 
+    "web3": "^4.3.0", 
+    "cors": "^2.8.5" 
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-plugin-promise": "^6.0.0"
+  },
+  "private": true
+}
