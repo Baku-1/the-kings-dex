@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Liquidity - The King's Dex</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-bg-deep-space text-text-primary pb-16">
+
+    <header class="p-4 flex justify-between items-center sticky top-0 z-50 header-cyber">
+        <a href="index.html" class="text-3xl app-title text-cyan-300 cursor-pointer">The King's Dex</a>
+        <div id="wallet-section">
+            <button id="connectWalletBtn" class="btn btn-connect-wallet text-sm">
+                <i class="fas fa-wallet mr-2"></i>Connect Wallet
+            </button>
+            <div id="walletInfo" class="hidden wallet-address-display text-sm">
+                <span id="walletAddress"></span>
+            </div>
+        </div>
+    </header>
+
+    <nav id="dexNav" class="bg-bg-element-dark shadow-md flex justify-center items-center space-x-2 md:space-x-4 border-b border-border-cyber">
+        <a href="index.html" class="dex-nav-item" id="nav-landingPage">Home</a>
+        <a href="swap.html" class="dex-nav-item" id="nav-swapPage">Swap</a>
+        <a href="pools.html" class="dex-nav-item active" id="nav-poolsPage">Pools</a>
+        <a href="farm.html" class="dex-nav-item" id="nav-farmPage">Farm</a>
+        <a href="learn.html" class="dex-nav-item" id="nav-learnPage">Learn</a>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto">
+            <div class="card-cyber p-6 md:p-8 rounded-lg">
+                <div class="flex items-center mb-5">
+                    <a href="pools.html" class="text-accent-cyan hover:text-white mr-4 p-2 rounded-full hover:bg-bg-element-medium" title="Back to Pools">
+                        <i class="fas fa-arrow-left text-xl"></i>
+                    </a>
+                    <h2 class="section-title text-2xl !mb-0" id="liquidityPageTitle">Add Liquidity</h2>
+                </div>
+                
+                <div class="flex border-b border-border-cyber mb-5">
+                    <button id="addLiqTab" class="flex-1 py-2 px-4 text-center font-orbitron text-lg border-b-2 border-accent-cyan text-accent-cyan" data-mode="add">Add</button>
+                    <button id="removeLiqTab" class="flex-1 py-2 px-4 text-center font-orbitron text-lg border-b-2 border-transparent text-text-secondary hover:text-accent-magenta" data-mode="remove">Remove</button>
+                </div>
+
+                <form id="addLiquidityForm" class="space-y-5">
+                    <div class="info-banner info !text-xs">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            You're adding liquidity to a Katana DEX pool. You'll earn fees from trades proportional to your pool share.
+                            <a href="learn.html#impermanent-loss" class="font-bold hover:underline">Important: Understand Impermanent Loss Risks.</a>
+                        </div>
+                    </div>
+
+                    <div class="form-group bg-bg-element-dark p-4 rounded-md border border-border-cyber-medium">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="form-label !mb-0">Input Token 1</label>
+                            <div class="text-xs text-text-secondary">Balance: <span id="tokenAAddBalance">0.00</span></div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="number" id="tokenAAddAmount" class="input-cyber flex-grow !py-3" placeholder="0.0" step="any">
+                            <button type="button" id="selectTokenAAddBtn" class="btn btn-cyber-secondary !px-3 !py-3 whitespace-nowrap w-40 flex items-center justify-center">
+                                <img id="tokenAAddIcon" src="https://placehold.co/24x24/181830/60EFFF?text=?" alt="Token" class="w-6 h-6 mr-2 rounded-full hidden">
+                                <span id="tokenAAddSymbol">Select Token</span>
+                            </button>
+                        </div>
+                        <button type="button" id="maxTokenAAddAmountBtn" class="text-xs text-accent-blue hover:underline mt-1 float-right">Use MAX</button>
+                    </div>
+
+                    <div class="text-center my-0">
+                        <i class="fas fa-plus text-accent-magenta text-xl"></i>
+                    </div>
+
+                    <div class="form-group bg-bg-element-dark p-4 rounded-md border border-border-cyber-medium">
+                         <div class="flex justify-between items-center mb-2">
+                            <label class="form-label !mb-0">Input Token 2</label>
+                            <div class="text-xs text-text-secondary">Balance: <span id="tokenBAddBalance">0.00</span></div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="number" id="tokenBAddAmount" class="input-cyber flex-grow !py-3" placeholder="0.0" step="any">
+                            <button type="button" id="selectTokenBAddBtn" class="btn btn-cyber-secondary !px-3 !py-3 whitespace-nowrap w-40 flex items-center justify-center">
+                                <img id="tokenBAddIcon" src="https://placehold.co/24x24/181830/60EFFF?text=?" alt="Token" class="w-6 h-6 mr-2 rounded-full hidden">
+                                <span id="tokenBAddSymbol">Select Token</span>
+                            </button>
+                        </div>
+                        <button type="button" id="maxTokenBAddAmountBtn" class="text-xs text-accent-blue hover:underline mt-1 float-right">Use MAX</button>
+                    </div>
+                    
+                    <div id="nxsBurnWarningPoolAdd" class="info-banner warning hidden">
+                        <i class="fas fa-fire"></i> If $NXS is one of the tokens, its 7% burn applies to the $NXS portion when adding liquidity. <a href="learn.html#nxs-burn" class="font-bold hover:underline ml-1">Why?</a>
+                    </div>
+
+                    <div id="poolInfoSectionAdd" class="text-sm text-text-secondary space-y-1.5 pt-3 border-t border-border-cyber-medium hidden">
+                        <h4 class="font-orbitron text-accent-cyan mb-1">Summary (Estimated):</h4>
+                        <div class="flex justify-between"><span>LP Tokens to Receive:</span> <span id="lpTokensToReceiveDisplay" class="text-text-primary">--</span></div>
+                        <div class="flex justify-between"><span>Rates:</span></div>
+                        <div class="flex justify-between pl-4"><span>1 <span id="tokenASymbolDisplayAdd">--</span> =</span> <span id="tokenBPerADisplayAdd" class="text-text-primary">-- <span id="tokenBSymbolDisplayAdd">--</span></span></div>
+                        <div class="flex justify-between pl-4"><span>1 <span id="tokenBSymbolDisplayAdd2">--</span> =</span> <span id="tokenAPerBDisplayAdd" class="text-text-primary">-- <span id="tokenASymbolDisplayAdd2">--</span></span></div>
+                        <div class="flex justify-between"><span>Your Share of Pool:</span> <span id="shareOfPoolDisplayAdd" class="text-text-primary">--%</span></div>
+                        <div class="flex justify-between items-center mt-1">
+                            <span>Estimated Gas Fee:</span>
+                            <span id="addLiqEstimatedGasFee" class="text-text-primary">-- RON</span>
+                        </div>
+                        <div class="mt-2">
+                            <a href="learn.html#il-calculator" id="ilCalculatorLinkAdd" class="text-xs text-accent-blue hover:underline"><i class="fas fa-calculator mr-1"></i>Try Impermanent Loss Calculator</a>
+                        </div>
+                    </div>
+                    <button type="submit" id="confirmAddLiquidityBtn" class="btn btn-cyber-primary w-full !py-3.5 text-lg mt-4" disabled>Select Tokens</button>
+                </form>
+
+                <form id="removeLiquidityForm" class="space-y-5 hidden">
+                     <div class="info-banner info !text-xs">
+                        <i class="fas fa-info-circle"></i>
+                        You are removing liquidity from a Katana DEX pool. You will receive the underlying tokens plus any accrued fees.
+                    </div>
+                    <div class="form-group bg-bg-element-dark p-4 rounded-md border border-border-cyber-medium">
+                        <div class="flex justify-between items-center mb-2">
+                             <label for="lpAmountToRemoveInput" class="form-label !mb-0">Amount of LP Tokens to Remove</label>
+                             <div class="text-xs text-text-secondary">Your LP Balance: <span id="userLPTokensBalance">0.00</span> <span id="selectedPoolPairSymbols">Pair</span></div>
+                        </div>
+                        <input type="number" id="lpAmountToRemoveInput" class="input-cyber w-full !py-3 mb-2" placeholder="0.0 LP Tokens" step="any">
+                        <div class="flex justify-around space-x-1 mb-1">
+                            <button type="button" class="btn btn-cyber-secondary !text-xs !px-2 !py-1 flex-1 remove-lp-percentage-btn" data-percentage="25">25%</button>
+                            <button type="button" class="btn btn-cyber-secondary !text-xs !px-2 !py-1 flex-1 remove-lp-percentage-btn" data-percentage="50">50%</button>
+                            <button type="button" class="btn btn-cyber-secondary !text-xs !px-2 !py-1 flex-1 remove-lp-percentage-btn" data-percentage="75">75%</button>
+                            <button type="button" class="btn btn-cyber-secondary !text-xs !px-2 !py-1 flex-1 remove-lp-percentage-btn" data-percentage="100">MAX</button>
+                        </div>
+                    </div>
+                    
+                    <div id="receiveAmountsSection" class="text-sm text-text-secondary space-y-1.5 pt-3 border-t border-border-cyber-medium hidden">
+                        <h4 class="font-orbitron text-accent-cyan mb-1">You will receive (estimated):</h4>
+                        <div class="flex justify-between items-center">
+                            <div><img id="tokenAToReceiveIcon" src="https://placehold.co/20x20/181830/FFFFFF?text=?" alt="" class="w-5 h-5 mr-1.5 rounded-full inline-block"><span id="tokenAToReceiveSymbol">--</span></div>
+                            <span id="tokenAToReceiveAmount" class="text-text-primary">--</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div><img id="tokenBToReceiveIcon" src="https://placehold.co/20x20/181830/FFFFFF?text=?" alt="" class="w-5 h-5 mr-1.5 rounded-full inline-block"><span id="tokenBToReceiveSymbol">--</span></div>
+                            <span id="tokenBToReceiveAmount" class="text-text-primary">--</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-1">
+                            <span>Estimated Gas Fee:</span>
+                            <span id="removeLiqEstimatedGasFee" class="text-text-primary">-- RON</span>
+                        </div>
+                    </div>
+                     <div id="nxsBurnWarningPoolRemove" class="info-banner warning hidden">
+                        <i class="fas fa-fire"></i> If $NXS is one of the tokens, its 7% burn applies to the $NXS portion withdrawn. <a href="learn.html#nxs-burn" class="font-bold hover:underline ml-1">Why?</a>
+                    </div>
+                    <button type="button" id="approveLPTokensBtn" class="btn btn-cyber-secondary w-full !py-3.5 text-lg mt-4 hidden">Approve LP Tokens for Removal</button>
+                    <button type="submit" id="confirmRemoveLiquidityBtn" class="btn btn-cyber-primary w-full !py-3.5 text-lg mt-2" disabled>Enter Amount</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div id="messageModal" class="modal-backdrop">
+        <div class="modal-content">
+             <h3 id="modalTitle" class="section-title text-xl mb-4">Notification</h3>
+            <p id="modalMessageText" class="mb-4">Default message.</p>
+            <p class="text-xs text-text-secondary mt-2 hidden" id="modalGasFeeContainer">
+                Estimated Gas Fee: <span id="modalEstimatedGasFee" class="text-text-primary">-- RON</span>
+            </p>
+            <div id="modalActionSpinner" class="hidden my-3 animate-spin rounded-full h-8 w-8 border-b-2 border-accent-cyan mx-auto"></div>
+            <div id="modalTransactionLinkContainer" class="hidden my-3 text-sm">
+                <a href="#" id="modalTransactionLink" target="_blank" rel="noopener noreferrer" class="text-accent-blue hover:underline">View on Ronin Explorer</a>
+            </div>
+            <button id="closeModalBtn" class="btn btn-cyber-secondary px-6 py-2.5 text-sm mt-3">Close</button>
+        </div>
+    </div>
+    
+    <div id="tokenSelectModal" class="modal-backdrop">
+        <div class="modal-content max-w-sm w-full">
+            <h3 class="section-title text-xl mb-4 !border-accent-blue">Select a Token</h3>
+            <input type="text" id="tokenSearchInput" class="input-cyber mb-4" placeholder="Search name or paste address">
+            <div id="tokenListContainer" class="max-h-60 overflow-y-auto space-y-1 token-list-container"></div>
+            <button id="closeTokenSelectModalBtn" class="btn btn-cyber-secondary px-6 py-2.5 text-sm mt-4">Close</button>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
